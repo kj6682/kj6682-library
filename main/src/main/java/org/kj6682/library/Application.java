@@ -1,4 +1,4 @@
-package org.kj6682.library.store;
+package org.kj6682.library;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.ComponentScan;
