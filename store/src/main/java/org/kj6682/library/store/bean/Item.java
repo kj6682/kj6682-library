@@ -11,7 +11,7 @@ package org.kj6682.library.store.bean;
 public class Item {
 
 	private final long id;
-	private long catalogId;
+	private String catalogId;
     private String title;
     private Status status;
     
@@ -21,11 +21,18 @@ public class Item {
 		this.status = status;
     }
     
+	public Item(long id, String catalogId, String status) {
+		super();
+		this.id = id;
+		this.catalogId = catalogId;
+		this.status = Status.valueOf(status);
+	}
+
 	public long getId() {
 		return id;
 	}
 	
-	public long getCatalogId() {
+	public String getCatalogId() {
 		return catalogId;
 	}
 	
