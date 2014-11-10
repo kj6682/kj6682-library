@@ -46,11 +46,5 @@ public class JdbcItemDao extends JdbcDaoSupport implements ItemDao{
 
 	}
 
-	@Override
-	protected void checkDaoConfig() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 }
