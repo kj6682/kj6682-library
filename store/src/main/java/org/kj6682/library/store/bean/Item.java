@@ -14,6 +14,11 @@ public class Item {
 	private String catalogId;
     private String title;
     private Status status;
+    public enum Status {
+    	
+    	AVAILABLE, RESERVED, LENT
+    	
+    }
     
     public Item(long id, Status status) {
 		super();

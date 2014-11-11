@@ -1,6 +1,6 @@
 package org.kj6682.library.store.bean;
 
-public enum Status {
+public enum LendingStatus {
 	
 	AVAILABLE, RESERVED, LENT
 	
