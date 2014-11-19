@@ -11,47 +11,33 @@ package org.kj6682.library.store.bean;
 public class Item {
 
 	private final long id;
-	private String catalogId;
-    private String title;
-    private Status status;
+	private final long catalogId;
+    private final Status status;
     public enum Status {
     	
-    	AVAILABLE, RESERVED, LENT
+    	AVAILABLE, RESERVED, LENT, ILLEGAL_OR_CURRUPTED
     	
     }
     
-    public Item(long id, Status status) {
-		super();
-		this.id = id;
-		this.status = status;
-    }
-    
-	public Item(long id, String catalogId, String status) {
+	public Item(long id, long catalogId, Status status) {
 		super();
 		this.id = id;
 		this.catalogId = catalogId;
-		this.status = Status.valueOf(status);
+		this.status = status;
 	}
 
 	public long getId() {
 		return id;
 	}
-	
-	public String getCatalogId() {
+
+	public long getCatalogId() {
 		return catalogId;
-	}
-	
-	public String getTitle() {
-		return title;
 	}
 
 	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
 	
 
 }

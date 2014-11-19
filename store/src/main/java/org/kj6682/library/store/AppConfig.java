@@ -5,11 +5,10 @@ import javax.sql.DataSource;
 
 import org.kj6682.library.store.dao.ItemDao;
 import org.kj6682.library.store.dao.JdbcItemDao;
-import org.kj6682.library.store.dao.JdbcLendingDao;
-import org.kj6682.library.store.dao.LendingDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 @Configuration
@@ -33,12 +32,12 @@ public class AppConfig {
     	return jdbcItemDao;
     }
     
-    @Bean(name="lendingDao")
-    public LendingDao lendingDao(){
-    	JdbcLendingDao jdbcLendingDao = new JdbcLendingDao();
-    	jdbcLendingDao.setDataSource(dataSource());
-    	return jdbcLendingDao;
-    }
-    
+//    @Bean(name="lendingDao")
+//    public LendingDao lendingDao(){
+//    	JdbcLendingDao jdbcLendingDao = new JdbcLendingDao();
+//    	jdbcLendingDao.setDataSource(dataSource());
+//    	return jdbcLendingDao;
+//    }
+//    
 }//:)
 
