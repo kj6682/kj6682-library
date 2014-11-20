@@ -13,7 +13,7 @@ import org.kj6682.library.store.bean.Item;
 import org.kj6682.library.store.bean.Lending;
 import org.kj6682.library.store.dao.ItemDao;
 import org.kj6682.library.store.dao.LendingDao;
-import org.kj6682.library.store.service.ItemService;
+import org.kj6682.library.store.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreController {
 
 	@Autowired
-	private ItemService itemService;
+	private ReservationService itemService;
 
 	private LendingDao lendingDao;
 
@@ -36,23 +36,23 @@ public class StoreController {
 		this.lendingDao = lendingDao;
 	}
 
-	@RequestMapping("/book")
-	public StoreReply<Item> book(@RequestParam(value = "id") long id) {
-		Item item;
-		try {
-			item = itemService.reserve(id);
-		} catch (Exception e) {
-			return new StoreReply<Item>("ERROR", "Impossible to book", null);
-		}
-		Set<Item> items = (new TreeSet<Item>());
-		items.add(item);
-		return new StoreReply<Item>("BOOKED", "", items);
-	}
-
-	@RequestMapping("/extend")
-	public Item extend(@RequestParam(value = "id") long id) {
-		return itemService.extend(id);
-	}
+//	@RequestMapping("/book")
+//	public StoreReply<Item> book(@RequestParam(value = "id") long id) {
+//		Item item;
+//		try {
+//			item = itemService.makeReservation(id);
+//		} catch (Exception e) {
+//			return new StoreReply<Item>("ERROR", "Impossible to book", null);
+//		}
+//		Set<Item> items = (new TreeSet<Item>());
+//		items.add(item);
+//		return new StoreReply<Item>("BOOKED", "", items);
+//	}
+//
+//	@RequestMapping("/extend")
+//	public Item extend(@RequestParam(value = "id") long id) {
+//		return itemService.extend(id);
+//	}
 
 	@RequestMapping("/grant")
 	public Lending grant(@RequestParam(value = "item") String item, @RequestParam(value = "user") String user,

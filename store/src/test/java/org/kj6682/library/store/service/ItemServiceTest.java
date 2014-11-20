@@ -1,5 +1,9 @@
 package org.kj6682.library.store.service;
 
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,15 +14,13 @@ import org.kj6682.library.store.DevConfig;
 import org.kj6682.library.store.bean.Item;
 import org.kj6682.library.store.bean.Item.Status;
 import org.kj6682.library.store.dao.ItemDao;
+import org.kj6682.library.store.service.ItemServiceImpl;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = { DevConfig.class })
 @ActiveProfiles("dev")
@@ -43,13 +45,13 @@ public class ItemServiceTest {
 	}
 	
 	@Test
-	public void create() {
+	public void createItem() {
 	  
 	  long catalogId = 708l;
 	  
       doReturn(new Item(Long.MAX_VALUE, catalogId, Status.AVAILABLE)).when(itemDao).create(catalogId);
 	  
-      Item result = impl.create(catalogId);
+      Item result = impl.createItem(catalogId);
      
 	  Assert.assertNotNull(result);
       Assert.assertEquals(catalogId, result.getCatalogId());
@@ -72,7 +74,7 @@ public class ItemServiceTest {
 		
 		try {
 			
-			impl.delete(id);
+			impl.deleteItem(id);
 			
 		} catch (Exception e) {
 			Assert.fail();
@@ -96,7 +98,7 @@ public class ItemServiceTest {
 		
 		try {
 			
-			impl.delete(id);
+			impl.deleteItem(id);
 			
 			Assert.fail();
 	
@@ -106,119 +108,6 @@ public class ItemServiceTest {
 		
 	}
 	
-	@Test
-	public void reserve(){
-        long id = 708l;
-		
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.AVAILABLE)).when(itemDao).findById(anyLong());
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.RESERVED)).when(itemDao).update(anyLong(), eq(Status.RESERVED));
-		
-				
-		try {
-			
-			Item result = impl.reserve(id);
-			Assert.assertNotNull(result);
-			Assert.assertEquals(Status.RESERVED, result.getStatus());
-			
-		} catch (Exception e) {
-			Assert.fail();
-		}
-
-	}
-
-	@Test
-	public void reserveNotExistingItem(){
-        long id = 708l;
-		
-		doReturn(null).when(itemDao).findById(anyLong());
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.RESERVED)).when(itemDao).update(anyLong(), eq(Status.RESERVED));
-		
-				
-		try {
-			
-			Item result = impl.reserve(id);
-			Assert.fail();
-		} catch (Exception e) {
-			
-		}
-
-	}
-	
-	@Test
-	public void release(){
-        long id = 708l;
-		
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.LENT)).when(itemDao).findById(anyLong());
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.AVAILABLE)).when(itemDao).update(anyLong(), eq(Status.AVAILABLE));
-		
-				
-		try {
-			
-			Item result = impl.release(id);
-			Assert.assertNotNull(result);
-			Assert.assertEquals(Status.AVAILABLE, result.getStatus());
-			
-		} catch (Exception e) {
-			Assert.fail();
-		}
-
-	}
-
-	@Test
-	public void releaseNotExistingItem(){
-        long id = 708l;
-		
-		doReturn(null).when(itemDao).findById(anyLong());
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.AVAILABLE)).when(itemDao).update(anyLong(), eq(Status.AVAILABLE));
-		
-				
-		try {
-			
-			Item result = impl.release(id);
-			Assert.fail();
-		} catch (Exception e) {
-			
-		}
-
-	}
-
-	@Test
-	public void extend(){
-        long id = 708l;
-		
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.LENT)).when(itemDao).findById(anyLong());
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.LENT)).when(itemDao).update(anyLong(), eq(Status.LENT));
-		
-				
-		try {
-			
-			Item result = impl.extend(id);
-			Assert.assertNotNull(result);
-			Assert.assertEquals(Status.LENT, result.getStatus());
-			
-		} catch (Exception e) {
-			Assert.fail();
-		}
-
-	}
-
-	@Test
-	public void extendNotExistingItem(){
-        long id = 708l;
-		
-		doReturn(null).when(itemDao).findById(anyLong());
-		doReturn(new Item(Long.MAX_VALUE, Long.MAX_VALUE, Status.LENT)).when(itemDao).update(anyLong(), eq(Status.LENT));
-		
-				
-		try {
-			
-			Item result = impl.extend(id);
-			Assert.fail();
-		} catch (Exception e) {
-			
-		}
-
-	}
 
 	@Test
 	public void listAll(){
@@ -232,7 +121,7 @@ public class ItemServiceTest {
 		
 		doReturn(listOfItems).when(itemDao).listAll();
 		
-		List<Item>  result = impl.listAll();
+		List<Item>  result = impl.listAllItems();
 		
 		Assert.assertNotNull(result);
 		Assert.assertEquals(5, result.size());
@@ -252,7 +141,7 @@ public class ItemServiceTest {
 		
 		doReturn(listOfItems).when(itemDao).listByCatalog(anyLong());
 		
-		List<Item>  result = impl.listByCatalog(2l);
+		List<Item>  result = impl.listItemsByCatalogId(2l);
 		
 		Assert.assertNotNull(result);
 		Assert.assertEquals(5, result.size());
