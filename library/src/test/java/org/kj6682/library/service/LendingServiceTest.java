@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.kj6682.library.DevConfig;
+import org.kj6682.library.DevTestConfig;
 import org.kj6682.library.bean.Item;
 import org.kj6682.library.bean.Lending;
 import org.kj6682.library.bean.Item.Status;
@@ -28,7 +28,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = { DevConfig.class })
+@ContextConfiguration(classes = { DevTestConfig.class })
 @ActiveProfiles("dev")
 public class LendingServiceTest {
 

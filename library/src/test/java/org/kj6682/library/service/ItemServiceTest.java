@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.kj6682.library.DevConfig;
+import org.kj6682.library.DevTestConfig;
 import org.kj6682.library.bean.Item;
 import org.kj6682.library.bean.Item.Status;
 import org.kj6682.library.dao.ItemDao;
@@ -22,7 +22,7 @@ import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = { DevConfig.class })
+@ContextConfiguration(classes = { DevTestConfig.class })
 @ActiveProfiles("dev")
 public class ItemServiceTest {
 
