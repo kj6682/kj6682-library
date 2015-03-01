@@ -1,21 +1,21 @@
 package org.kj6682.library;
-import java.util.List;
-
 import javax.sql.DataSource;
 
-import org.kj6682.library.bean.Contact;
 import org.kj6682.library.dao.ItemDao;
 import org.kj6682.library.dao.JdbcItemDao;
 import org.kj6682.library.dao.JdbcLendingDao;
 import org.kj6682.library.dao.LendingDao;
 import org.kj6682.library.service.ContactService;
 import org.kj6682.library.service.ContactServiceImpl;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
+import com.mangofactory.swagger.plugin.EnableSwagger;
+
 @SpringBootApplication
+@EnableSwagger
 public class Application {
 
     @Bean(name="dataSource")

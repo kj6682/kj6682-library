@@ -3,6 +3,9 @@ package org.kj6682.library.controller;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,13 +41,11 @@ public class ContactControllerTest {
 	ContactController contactController = new ContactController();
 
 	@Mock
-	private ContactService contactService;
+	private ContactService contactServiceMock;
 
 	@Before
 	public void setUp() {
-		// We have to reset our mock between tests because the mock objects
-		// are managed by the Spring container. If we would not reset them,
-		// stubbing and verified behavior would "leak" from one test to another.
+	
 		MockitoAnnotations.initMocks(this);
 
 		mockMvc = MockMvcBuilders.standaloneSetup(contactController).build();
@@ -56,7 +57,7 @@ public class ContactControllerTest {
 		Contact first = new Contact(1L, "Isaac", "Newton");
 		Contact second = new Contact(2L, "Albert", "Einstein");
 
-		when(contactService.findAll()).thenReturn(Arrays.asList(first, second));
+		when(contactServiceMock.findAll()).thenReturn(Arrays.asList(first, second));
 
 		mockMvc.perform( get("/contact/list") )
 		        .andExpect( status().isOk() )
@@ -65,6 +66,9 @@ public class ContactControllerTest {
 				.andExpect(jsonPath("$[0].firstName", is("Isaac"))).andExpect(jsonPath("$[0].lastName", is("Newton")))
 				.andExpect(jsonPath("$[1].id", is(2))).andExpect(jsonPath("$[1].firstName", is("Albert")))
 				.andExpect(jsonPath("$[1].lastName", is("Einstein")));
+		
+		 verify(contactServiceMock, times(1)).findAll();
+	     verifyNoMoreInteractions(contactServiceMock);
 
 	}
 
@@ -73,7 +77,7 @@ public class ContactControllerTest {
 		
 		Contact contact = new Contact(1L, "Isaac", "Newton");
 		
-		when( contactService.add(any(String.class), any(String.class) ) ).thenReturn(contact);
+		when( contactServiceMock.add(any(String.class), any(String.class) ) ).thenReturn(contact);
 		
 		 
 		mockMvc.perform( post("/contact/")
@@ -85,6 +89,9 @@ public class ContactControllerTest {
                 .andExpect( jsonPath("$.id", is(1)) )
                 .andExpect( jsonPath("$.firstName", is("Isaac")) )
                 .andExpect( jsonPath("$.lastName", is("Newton")) );
+		
+		verify(contactServiceMock, times(1)).add(any(String.class), any(String.class));
+	    verifyNoMoreInteractions(contactServiceMock);
 	}
 
 
@@ -93,7 +100,7 @@ public class ContactControllerTest {
 
 		Contact contact = new Contact(1L, "Isaac", "Newton");
 		
-		when(contactService.findById( 1L )).thenReturn(contact);
+		when(contactServiceMock.findById( any(Long.class) )).thenReturn(contact);
 
 		mockMvc.perform( get("/contact/{id}", 1L) )
 		        .andExpect( status().isOk() )
@@ -101,6 +108,9 @@ public class ContactControllerTest {
 				.andExpect(jsonPath("$.id", is(1)))
 				.andExpect(jsonPath("$.firstName", is("Isaac")))
 				.andExpect(jsonPath("$.lastName", is("Newton")));
+		
+		verify(contactServiceMock, times(1)).findById(any(Long.class));
+	    verifyNoMoreInteractions(contactServiceMock);
 
 	}
 
@@ -109,7 +119,7 @@ public class ContactControllerTest {
 
 		Contact contact = new Contact(1L, "Isaac", "Newton");
 		
-		when(contactService.deleteById( 1L )).thenReturn(contact);
+		when(contactServiceMock.deleteById( any( Long.class ) )).thenReturn(contact);
 
 		mockMvc.perform( delete("/contact/{id}", 1L) )
 		        .andExpect( status().isOk() )
@@ -117,6 +127,8 @@ public class ContactControllerTest {
 				.andExpect(jsonPath("$.id", is(1)))
 				.andExpect(jsonPath("$.firstName", is("Isaac")))
 				.andExpect(jsonPath("$.lastName", is("Newton")));
-
+		
+		verify(contactServiceMock, times(1)).deleteById(any(Long.class));
+	    verifyNoMoreInteractions(contactServiceMock);
 	}
 }

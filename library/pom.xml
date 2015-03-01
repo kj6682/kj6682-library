@@ -47,11 +47,15 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.mangofactory</groupId>
+			<artifactId>swagger-springmvc</artifactId>
+			<version>0.8.8</version>
+		</dependency>
+		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.5</version>
 		</dependency>
-		<!-- TESTING DEPENDENCIES -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
@@ -87,6 +91,12 @@
 			<artifactId>json-path-assert</artifactId>
 			<version>${jsonpath.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ajar</groupId>
+			<artifactId>swagger-spring-mvc-ui</artifactId>
+			<version>0.1</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -131,6 +141,11 @@
 		<repository>
 			<id>spring-releases</id>
 			<url>http://repo.spring.io/libs-release</url>
+		</repository>
+		<repository>
+			<id>oss-jfrog-artifactory</id>
+			<name>oss-jfrog-artifactory-releases</name>
+			<url>http://oss.jfrog.org/artifactory/oss-release-local</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>

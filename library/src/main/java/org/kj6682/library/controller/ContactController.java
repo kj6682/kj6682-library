@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wordnik.swagger.annotations.Api;
+
+@Api(value = "contact", description = "contacts of a simple library application") 
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
@@ -24,7 +26,7 @@ public class ContactController {
 	@Autowired
 	private ContactService service;
 
-	@RequestMapping("/list")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Contact> findAll() {
 		List<Contact> result = service.findAll();
 		return result;

@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wordnik.swagger.annotations.Api;
+
+
+@Api(value = "store", description = "store of a bloody application")
 @RestController
 public class StoreController {
 
